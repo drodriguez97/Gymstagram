@@ -5,6 +5,11 @@
   text-align: center;
 }
 
+.nav {
+  padding: auto;
+  text-align: justify;
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
