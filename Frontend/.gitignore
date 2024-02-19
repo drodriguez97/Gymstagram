@@ -4,6 +4,7 @@
 
 # Environment variables
 /.env
+creds.py
 
 # Build output
 /build

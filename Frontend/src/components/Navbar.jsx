@@ -1,22 +1,14 @@
-export default function Navbar(){
-    return(
-        <header className="app-header">
+import { Flex, Box, Heading, Spacer, Link } from '@chakra-ui/react';
+
+export default function Navbar() {
+    return (
+        <Box fontSize={20}>
             <nav className="navbar">
-                <ul>
-                    <li>
-                        <h3>My Workout Plan</h3>
-                    </li>
-                    <li>
-                        <h3>Home</h3>
-                    </li>
-                    <li>
-                        <h3> Create New Post</h3>
-                    </li>
-                    <li>
-                        <h3>Search</h3>
-                    </li>
-                </ul>
-            </nav>
-        </header>
+                <Link mr="2rem" color="blue.500" _hover={{ textDecoration: 'underline' }}>My Workout Plan</Link>
+                <Link mr="2rem" color="blue.500" _hover={{ textDecoration: 'underline' }}>Home</Link>
+                <Link mr="2rem" color="blue.500" _hover={{ textDecoration: 'underline' }}>Create New Post</Link>
+                <Link color="blue.500" _hover={{ textDecoration: 'underline' }}>Search</Link>
+            </nav>   
+        </Box>
     )
 }
