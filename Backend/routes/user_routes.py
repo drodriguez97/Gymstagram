@@ -3,7 +3,7 @@ import creds
 from flask import Blueprint
 from flask import request, jsonify
 
-user_bp= Blueprint(__name__)
+user_bp = Blueprint('user_bp', __name__)
 
 config = {
     "apiKey": creds.FIREBASE_API_KEY,

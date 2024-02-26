@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
+
 import React, { useState } from 'react';
-import { FormControl, FormLabel, Input, Button, Box, Heading, Text } from '@chakra-ui/react';
+import { FormControl, FormLabel, Input, Button, Box, Heading} from '@chakra-ui/react';
 import axios from 'axios';
 
 export default function Login() {

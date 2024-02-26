@@ -1,31 +1,23 @@
-import './App.css';
-import { ChakraProvider } from '@chakra-ui/react';
-import {
-Center,
-Button,
-Heading,
-VStack,
-HStack,
-Text,
-Image,
-Link
-} from '@chakra-ui/react';
-
-import Navbar from './components/Navbar';
+import { ChakraProvider, VStack} from '@chakra-ui/react';
+import { Header, Footer } from './components/HeaderFooter';
 import Login from './components/Login';
 import Profile from './components/Profile';
+import WorkoutSchedule from './components/WorkoutSchedule';
 
 export default function App() {
-  return (
-    <ChakraProvider>
-      <Heading className="App-header" padding={4} fontSize={50}>Gymstagram</Heading>
-      <VStack spacing={8} mt={3}>
-          <Navbar />
-          <Login />
-          <Profile />
-        </VStack>
-  </ChakraProvider>
-  );
+    return (
+        <ChakraProvider>
+            <VStack minH="100vh" w="100vw" bg="gray.100">
+                <Header />
+                <VStack spacing={8} mt={3}>
+                    <Login />
+                    <Profile />
+                </VStack>
+                <WorkoutSchedule />
+                <Footer /> 
+            </VStack>
+        </ChakraProvider>
+    );
 }
 
 

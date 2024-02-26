@@ -8,7 +8,7 @@ export default function Profile() {
     function getData() {
       axios({
         method: "GET",
-        url: "/api/profile",
+        url: "api/user/profile",
       })
         .then((response) => {
           const res = response.data;
@@ -30,7 +30,7 @@ export default function Profile() {
       <div className="profile">
         <p>To get your profile details:</p>
         <Button onClick={getData} colorScheme="blue">Click me</Button>
-        {profileData && ( // Check if profileData is not null before accessing its properties
+        {profileData && ( 
           <div>
             <p>Profile name: {profileData.profile_name}</p>
             <p>About me: {profileData.about_me}</p>
