@@ -24,7 +24,7 @@ const WorkoutList = {
             "Romanian Deadlifts"
         ],
         "Shoulders": [
-            "Overhead Press (Barbell or Dumbbell)",
+            "Overhead Press",
             "Lateral Raises",
             "Front Raises",
             "Arnold Press",

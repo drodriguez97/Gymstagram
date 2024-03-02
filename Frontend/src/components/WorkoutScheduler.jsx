@@ -1,23 +1,27 @@
-import { useState } from "react";
-import DatePicker from "react-datepicker";
+// eslint-disable-next-line no-unused-vars
+import React, { useState } from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import WorkoutList from "./WorkoutList";
-import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormHelperText, FormLabel, Input, Select} from '@chakra-ui/react';
+import DayOfWeekPicker from "./DayOfWeekPicker"; 
+import WeekCalendar from "./WeekCalendar"; 
+import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormHelperText, FormLabel, Input, Select, useToast} from '@chakra-ui/react';
 
 export default function WorkoutScheduleButton() {
-
     const [isOpen, setIsOpen] = useState(false);
-    const openModal = () => setIsOpen(true);
-    const closeModal = () => setIsOpen(false);
+    const [events, setEvents] = useState([]);
 
     const [selectedMuscleGroup, setSelectedMuscleGroup] = useState('');
     const [selectedWorkoutName, setSelectedWorkoutName] = useState('');
     const [workoutSets, setWorkoutSets] = useState('');
     const [workoutReps, setWorkoutReps] = useState('');
-    const [workoutDuration, setWorkoutDuration] = useState('');
-    const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
-    const [error, setError] = useState("");
+    const [workoutWeight, setWorkoutWeight] = useState('');
+    const [selectedDay, setSelectedDay] = useState('');
+    const [error, setError] = useState('');
+
+    const openModal = () => setIsOpen(true);
+    const closeModal = () => setIsOpen(false);
+    
+    const toast = useToast();
 
     const handleMuscleGroupChange = (e) => {
         setSelectedMuscleGroup(e.target.value);
@@ -35,40 +39,49 @@ export default function WorkoutScheduleButton() {
     const handleWorkoutReps = (e) => {
         setWorkoutReps(e.target.value);
     };
-    
-    const handleWorkoutDuration = (e) => {
-        setWorkoutDuration(e.target.value);
+
+    const handleDaySelect = (selectedDay) => {
+        setSelectedDay(selectedDay);
     };
 
-    const handleStartDate = (date) => {
-        setStartDate(date);
-        if(date > endDate) {
-            setError("Choose a start date that is before your end date");
-        } else {
-            setError("");
-        }
-    };
+    const handleWorkoutWeight = (e) => {
 
-    const handleEndDate = (date) => {
-        setEndDate(date);
-        if(date < startDate) {
-            setError("Choose an end date that is after your start date");
-        } else {
-            setError("");
-        }
+        setWorkoutWeight(e.target.value);
+
     };
 
     const handleSubmit = () => {
-        if (!selectedMuscleGroup || !selectedWorkoutName || !workoutSets || !workoutReps || !workoutDuration || !startDate || !endDate) {
+        if (!selectedMuscleGroup || !selectedWorkoutName || !workoutSets || !workoutReps) {
             setError("Please fill in all the fields.");
         } else {
-            setError(""); // Clear error message if all fields are filled
-            // Here you can proceed with submitting the form data
-            console.log("Form submitted successfully!");
-            closeModal(); // Close modal after successful submission
+            setError("");
+            const newEvent = {
+                title: selectedWorkoutName,
+                muscleGroup: selectedMuscleGroup,
+                start: selectedDay,
+                sets: workoutSets,
+                reps: workoutReps,
+                weight: workoutWeight,      
+            };
+            setEvents([...events, newEvent]);
+            closeModal();
+            setSelectedMuscleGroup('');
+            setSelectedWorkoutName('');
+            setWorkoutSets('');
+            setWorkoutReps('');
+            setWorkoutWeight('');
+            setSelectedDay('');
+
+            toast({
+                title: "Workout Added",
+                description: "Your workout has been successfully added",
+                status: "success",
+                duration: 1000,
+                isClosable: true,
+            })
         }    
     };
-    
+
     return (
         <Box>
             <Button colorScheme="blue" onClick={openModal}>Add Workout</Button>
@@ -79,7 +92,7 @@ export default function WorkoutScheduleButton() {
                     <ModalCloseButton />
                     <ModalBody>
                         <FormControl marginBottom="4">
-                            <FormLabel>Muscle Group</FormLabel>
+                            <FormLabel color={"blue.500"}>Muscle Group</FormLabel>
                             <Select placeholder="Select Muscle Group" value={selectedMuscleGroup} onChange={handleMuscleGroupChange} marginBottom="4">
                                 {Object.keys(WorkoutList).map((muscleGroup) => (
                                     <option key={muscleGroup} value={muscleGroup}>{muscleGroup}</option>
@@ -97,24 +110,22 @@ export default function WorkoutScheduleButton() {
                             </FormControl>
                         )}
                         <FormControl marginBottom="4">
-                            <FormLabel>Workout Sets</FormLabel>
-                            <Input type="text" value={workoutSets} onChange={handleWorkoutSets} placeholder="Enter Workout Sets" />
+                            <FormLabel color={"blue.500"}>Workout Sets</FormLabel>
+                            <Input type="number" value={workoutSets} onChange={handleWorkoutSets} placeholder="Enter Workout Sets" />
+                        </FormControl>
+                        <FormControl   marginBottom="4">
+                            <FormLabel color={"blue.500"}>Workout Reps</FormLabel>
+                            <Input type="number" value={workoutReps} onChange={handleWorkoutReps} placeholder="Enter Workout Reps" />
+                        </FormControl>
+                        <FormControl  marginBottom="4">
+                        <FormLabel color={"blue.500"}>Workout Weight</FormLabel>
+                            <Input type="number" value={workoutWeight} onChange={handleWorkoutWeight} placeholder="Enter Workout Weight" />
                         </FormControl>
                         <FormControl marginBottom="4">
-                            <FormLabel>Workout Reps</FormLabel>
-                            <Input type="text" value={workoutReps} onChange={handleWorkoutReps} placeholder="Enter Workout Reps" />
+                            <FormLabel color={"blue.500"} textAlign="center" >Select a Day of the Week</FormLabel>
+                            <DayOfWeekPicker onSelect={handleDaySelect} />
                         </FormControl>
                         <FormControl marginBottom="4">
-                            <FormLabel>Workout Duration</FormLabel>
-                            <Input type="text" value={workoutDuration} onChange={handleWorkoutDuration} placeholder="Enter Workout Duration" />
-                        </FormControl>
-                        <FormControl marginBottom="4">
-                            <FormLabel color="blue">Enter a Start Date</FormLabel>
-                            <DatePicker selected={startDate} onChange={handleStartDate} />
-                        </FormControl>
-                        <FormControl marginBottom="4">
-                            <FormLabel color="blue">Enter an End Date</FormLabel>
-                            <DatePicker selected={endDate} onChange={handleEndDate} />
                             {error && <FormHelperText color="red">{error}</FormHelperText>}
                         </FormControl>
                     </ModalBody>
@@ -124,6 +135,7 @@ export default function WorkoutScheduleButton() {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
+            <WeekCalendar events={events}/>
         </Box>
     );
 }
