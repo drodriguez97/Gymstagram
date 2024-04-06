@@ -1,29 +1,28 @@
-import { ChakraProvider, VStack, Center, Heading } from '@chakra-ui/react';
+import { ChakraProvider, VStack, Center, Heading, Container } from '@chakra-ui/react';
 import { Nav, Footer } from './components/NavFooter';
-import Login from './components/Login';
-import Profile from './components/Profile';
-import WorkoutScheduleButton from './components/WorkoutScheduler';
+import WorkoutScheduleButton from './components/WorkoutScheduleButton';
+import Dashboard from './components/Dashboard/Dashboard';
+import WeatherDashboard from './components/Dashboard/WeatherDashboard';
 
 export default function App() {
     return (
         <ChakraProvider>
             <header>
-                <Center bg='blue.500' color='white' width='100%' padding={10}>
+                <Center bg='black' color='white' width='100%' padding={10}>
                     <VStack>
                         <Heading padding={4}>Gymstagram</Heading>
                         <Nav />
                     </VStack> 
                 </Center>
             </header>
-
             <main>
-                <Center bg='white.500' color='black' width='100%' padding={5}>
-                    <VStack spacing={50} paddingY={10}>
-                        <Profile />
-                        <Login />
-                        <WorkoutScheduleButton />
+                    <VStack bg='white' spacing={100} paddingY={10}>
+                        <Container maxW="80%" p={0}>
+                        <WeatherDashboard />
+                            <Dashboard />
+                            <WorkoutScheduleButton />
+                        </Container>
                     </VStack> 
-                </Center>
             </main>
 
             <footer>
