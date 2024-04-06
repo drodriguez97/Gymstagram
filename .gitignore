@@ -4,3 +4,6 @@ Backend/__pycache__/base.cpython-310.pyc
 Backend/__pycache__/creds.cpython-310.pyc
 Backend/creds.py
 Backend/routes/__pycache__/user_routes.cpython-310.pyc
+Backend/service_accounts/gymstagram-f7fee-154c268542a3.json
+Backend/routes/__pycache__/user_auth_routes.cpython-310.pyc
+Backend/routes/__pycache__/weather_routes.cpython-310.pyc

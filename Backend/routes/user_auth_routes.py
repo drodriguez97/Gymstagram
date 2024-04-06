@@ -1,10 +1,9 @@
 import pyrebase 
 import creds
-import secrets
 from flask import Flask, Blueprint
 from flask import request, jsonify, session
 
-user_bp = Blueprint('user_bp', __name__)
+user_auth_bp = Blueprint('user_bp', __name__)
 
 config = {
     "apiKey": creds.FIREBASE_API_KEY,
@@ -19,7 +18,7 @@ config = {
 firebase = pyrebase.initialize_app(config)
 auth = firebase.auth()
 
-@user_bp.route('/profile', methods=["GET"])
+@user_auth_bp.route('/profile', methods=["GET"])
 def my_profile():
     response_body = {
         "name": "Daniel",
@@ -27,7 +26,7 @@ def my_profile():
     }
     return response_body
 
-@user_bp.route('/login', methods=['POST', 'GET'])
+@user_auth_bp.route('/login', methods=['POST', 'GET'])
 def login():
     if request.method == 'POST':
         data = request.json
@@ -35,9 +34,9 @@ def login():
         password = data.get('password')
         try:
             user = auth.sign_in_with_email_and_password(email, password)
-            return 'Login successful'  # Or any other success response
+            return 'Login successful' 
         except Exception as e:
             return str(e), 401 
     
 if __name__ == '__main__':
-    user_bp.run(debug=True)
+    user_auth_bp.run(debug=True)
