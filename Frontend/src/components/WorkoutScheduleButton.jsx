@@ -4,9 +4,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import WorkoutList from "./WorkoutList";
 import DayOfWeekPicker from "./DayOfWeekPicker"; 
 import WeekCalendar from "./WeekCalendar"; 
-import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormHelperText, FormLabel, Input, Select, useToast} from '@chakra-ui/react';
+import { Box, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormHelperText, FormLabel, Input, Select, useToast, Heading} from '@chakra-ui/react';
 
-export default function WorkoutScheduleButton() {
+const WorkoutScheduleButton = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [events, setEvents] = useState([]);
 
@@ -83,8 +83,8 @@ export default function WorkoutScheduleButton() {
     };
 
     return (
-        <Box>
-            <Button colorScheme="blue" onClick={openModal}>Add Workout</Button>
+        <Box Box p={8} bgColor='gray.200' borderRadius="lg" boxShadow="lg" margin={10}>
+             <Heading as="h2" size="md" mb={6} mt={10} textAlign="center" borderBottom="1px solid black">Workout Calendar</Heading>
             <Modal isOpen={isOpen} onClose={closeModal}>
                 <ModalOverlay />
                 <ModalContent borderRadius="xl">
@@ -92,7 +92,7 @@ export default function WorkoutScheduleButton() {
                     <ModalCloseButton />
                     <ModalBody>
                         <FormControl marginBottom="4">
-                            <FormLabel color={"blue.500"}>Muscle Group</FormLabel>
+                            <FormLabel color={"black"}>Muscle Group</FormLabel>
                             <Select placeholder="Select Muscle Group" value={selectedMuscleGroup} onChange={handleMuscleGroupChange} marginBottom="4">
                                 {Object.keys(WorkoutList).map((muscleGroup) => (
                                     <option key={muscleGroup} value={muscleGroup}>{muscleGroup}</option>
@@ -110,19 +110,19 @@ export default function WorkoutScheduleButton() {
                             </FormControl>
                         )}
                         <FormControl marginBottom="4">
-                            <FormLabel color={"blue.500"}>Workout Sets</FormLabel>
+                            <FormLabel color={"black"}>Workout Sets</FormLabel>
                             <Input type="number" value={workoutSets} onChange={handleWorkoutSets} placeholder="Enter Workout Sets" />
                         </FormControl>
                         <FormControl   marginBottom="4">
-                            <FormLabel color={"blue.500"}>Workout Reps</FormLabel>
+                            <FormLabel color={"black"}>Workout Reps</FormLabel>
                             <Input type="number" value={workoutReps} onChange={handleWorkoutReps} placeholder="Enter Workout Reps" />
                         </FormControl>
                         <FormControl  marginBottom="4">
-                        <FormLabel color={"blue.500"}>Workout Weight</FormLabel>
+                        <FormLabel color={"black"}>Workout Weight</FormLabel>
                             <Input type="number" value={workoutWeight} onChange={handleWorkoutWeight} placeholder="Enter Workout Weight" />
                         </FormControl>
                         <FormControl marginBottom="4">
-                            <FormLabel color={"blue.500"} textAlign="center" >Select a Day of the Week</FormLabel>
+                            <FormLabel color={"black"} textAlign="center" >Select a Day of the Week</FormLabel>
                             <DayOfWeekPicker onSelect={handleDaySelect} />
                         </FormControl>
                         <FormControl marginBottom="4">
@@ -130,12 +130,15 @@ export default function WorkoutScheduleButton() {
                         </FormControl>
                     </ModalBody>
                     <ModalFooter borderTopWidth="1px">
-                        <Button colorScheme="blue" mr={3} onClick={closeModal}>Close</Button>
-                        <Button variant="outline" colorScheme="blue" onClick={handleSubmit}>Submit</Button>
+                        <Button colorScheme="red" mr={3} onClick={closeModal}>Close</Button>
+                        <Button variant="outline" colorScheme="red" onClick={handleSubmit}>Submit</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
             <WeekCalendar events={events}/>
+            <Button colorScheme="red" size="sm" mt={8} onClick={openModal}>Add Workout</Button>
         </Box>
     );
 }
+
+export default WorkoutScheduleButton;

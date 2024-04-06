@@ -21,8 +21,7 @@ export default function Login() {
     const handleSubmit = async (event) => {
       event.preventDefault();
       try {
-        console.log(email);
-        const response = await axios.post('api/user/login', { email, password });
+        const response = await axios.post('api/user_auth/login', { email, password });
         console.log('Login successful!');
       } catch (error) {
         if (error.response) {
